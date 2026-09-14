@@ -127,6 +127,21 @@ io.on('connection', (socket) => {
   });
 });
 
+const path = require('path');
+const fs = require('fs');
+
+// Serve static frontend in production if built
+const clientDist = path.join(__dirname, '../client/dist');
+if (fs.existsSync(clientDist)) {
+  app.use(express.static(clientDist));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api') || req.path.startsWith('/socket.io')) {
+      return next();
+    }
+    res.sendFile(path.join(clientDist, 'index.html'));
+  });
+}
+
 const PORT = process.env.PORT || 3001;
 
 if (require.main === module) {

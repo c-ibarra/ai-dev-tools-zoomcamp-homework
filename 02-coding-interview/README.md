@@ -1,62 +1,75 @@
 # Real-Time Collaborative Coding Interview Platform
 
-An AI-assisted full-stack platform for live technical interviews, featuring real-time code synchronization across participants, room management, syntax highlighting, and in-browser safe code execution.
+An AI-assisted full-stack platform for live technical interviews, featuring real-time code synchronization across participants, room management, syntax highlighting, and in-browser safe code execution using WebAssembly.
 
 Built for **Homework 2 (AI Dev Tools Zoomcamp 2026)**.
 
 ---
 
+## Features
+
+- ⚡ **Real-Time Collaboration**: Instant synchronization of code edits and room presence using WebSockets (`socket.io`).
+- 🎨 **Syntax Highlighting**: Powered by **Monaco Editor** (`@monaco-editor/react`), supporting JavaScript and Python with VS Code dark theme.
+- 🚀 **Browser-Safe Code Execution**:
+  - **JavaScript**: Evaluated in-browser with console capturing.
+  - **Python**: Compiled and executed entirely client-side via **Pyodide** WebAssembly (WASM).
+- 🔗 **Shareable Interview Links**: Candidates and interviewers join the same session via unique room URLs (`?room=<id>`).
+- 🐳 **Single-Container Dockerfile**: Multi-stage build packaging both backend and frontend into a lightweight container.
+
+---
+
 ## Architecture
 
-- **Frontend (`/client`)**: React 18 with Vite, modern dark-themed UI, real-time WebSocket connection to the interview session.
-- **Backend (`/server`)**: Node.js + Express + Socket.io for managing room isolation, participant presence, and broadcasting live code changes.
-- **Protocol**: WebSockets (Socket.io) with room scoping (`join-room`, `code-change`, `sync-code`, `room-users`).
+- **Frontend (`/client`)**: React 18, Vite, `@monaco-editor/react`, Pyodide CDN.
+- **Backend (`/server`)**: Node.js, Express, Socket.io, CORS.
+- **Root Orchestrator**: Managed via `concurrently`.
 
 ---
 
 ## Getting Started
 
 ### 1. Install Dependencies
-From the root of this project:
 ```bash
 npm run install:all
 ```
-Or install manually in each subfolder:
-```bash
-npm install
-cd server && npm install
-cd ../client && npm install
-```
 
----
-
-## Running the Application
-
-To run both the backend server and frontend client concurrently:
+### 2. Run Both Client & Server Concurrently
 ```bash
 npm run dev
 ```
-
-- **Frontend Client**: http://localhost:5173
-- **Backend Server**: http://localhost:3001
-- **Health Check**: http://localhost:3001/api/health
+- Frontend: http://localhost:5173
+- Backend: http://localhost:3001
 
 ---
 
-## Running Integration Tests
+## Integration Tests
 
-To run the full suite of integration tests (HTTP REST API + WebSocket real-time synchronization):
-
+To run the integration test suite covering REST APIs and WebSocket synchronization:
 ```bash
 npm test
 ```
 
-### What the tests cover:
-1. **HTTP REST API**:
-   - `GET /api/health` returns status `ok`.
-   - `POST /api/rooms` creates a new room with a unique room ID.
-   - `GET /api/rooms/:roomId` returns metadata and active user counts.
-   - `GET /api/rooms/:roomId` returns 404 for nonexistent rooms.
-2. **WebSocket Client-Server Interaction**:
-   - Client joins room and receives initial code synchronization (`sync-code`).
-   - Multiple clients join the same room and synchronize code edits in real-time (`code-change` -> `code-update`).
+---
+
+## Containerization (Docker)
+
+Build the unified production Docker container:
+```bash
+docker build -t coding-interview:latest .
+```
+
+Run the container:
+```bash
+docker run -p 3001:3001 coding-interview:latest
+```
+Access the application at http://localhost:3001.
+
+---
+
+## Deployment
+
+Deployable to **Render** or **Railway**:
+1. Connect this GitHub repository.
+2. Select Docker runtime or Node.js environment.
+3. Root directory: `02-coding-interview`.
+4. Port: `3001`.
