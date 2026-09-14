@@ -1,36 +1,19 @@
-# Shared Household Chores Manager
+# AI Dev Tools Zoomcamp - Homework Projects
 
-A lightweight web application built with Django and Python to manage and track shared household chores among roommates.
+Repository containing the weekly projects and assignments for the [DataTalksClub AI Dev Tools Zoomcamp (2026 Cohort)](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp).
 
-Part of the **AI Dev Tools Zoomcamp** (Homework 1).
+---
 
-## Features
-1. **Household Member Management:** Register and list roommates.
-2. **Chore Creation & Assignment:** Add chores and assign them to members.
-3. **Centralized Dashboard:** View all chores organized by Pending and Completed.
-4. **Quick Status Toggle:** Mark chores as completed or pending directly from the dashboard.
+## Projects Directory
 
-## Prerequisites
-* Python 3.12+
-* [uv](https://docs.astral.sh/uv/)
+### [01-household-chores](./01-household-chores) (Homework 1)
+- **Topic**: AI-Native Developer Workflow
+- **Application**: Shared Household Chores Manager
+- **Stack**: Python 3.12, Django, `uv`, SQLite
+- **Highlights**: Spec-driven development from vague idea, automated unit and integration testing suite.
 
-## Getting Started
-1. Clone the repository:
-   ```bash
-   git clone <REPO_URL>
-   cd ai-dev-tools-zoomcamp-homework
-   ```
-
-2. Set up the virtual environment and install dependencies:
-   ```bash
-   uv sync
-   ```
-
-3. Run migrations and start the development server:
-   ```bash
-   uv run python manage.py migrate
-   uv run python manage.py runserver
-   ```
-
-## Documentation
-* [Specification & Plan](_docs/plan.md)
+### [02-coding-interview](./02-coding-interview) (Homework 2)
+- **Topic**: Build and Ship an AI-Assisted Full-Stack App
+- **Application**: Real-Time Collaborative Coding Interview Platform
+- **Stack**: React, Vite, Node.js, Express, Socket.io, WebAssembly (Pyodide)
+- **Highlights**: Live multi-user code synchronization, syntax highlighting, browser-safe WASM code execution, Docker containerization.
